@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>Calendars for the Year 2023</h1>
+    
+    {% for month_data in months %}
+        <h2>{{ month_data['month_name'] }}</h2>
+        <table>
+            <tr>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+            </tr>
+            {% for row in month_data['calendar'].split('\n')[2:] %}
+                <tr>
+                    {% for day in row.split() %}
+                        <td>{{ day }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
+{% endblock %}

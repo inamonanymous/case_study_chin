@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="left-panel">
+    <ul>
+        <li><a href="{{ url_for('display_calendar') }}">Events Calendar</a></li>
+        <li><a href="{{ url_for('option', option='option2') }}">User Details</a></li>
+        <li><a href="{{ url_for('option', option='option3') }}">Holidays</a></li>
+        <li><a href="{{ url_for('option', option='option4') }}">Event Booking</a></li>
+    </ul>
+</div>
+<div class="content">
+    {% if selected_option == 'option1' %}
+    <div>Content for Option 1</div>
+    {% elif selected_option == 'option2' %}
+    <div>Content for Option 2</div>
+    {% elif selected_option == 'option3' %}
+    <div>Content for Option 3</div>
+    {% elif selected_option == 'option4' %}
+    <div>Content for Option 4</div>
+    {% endif %}
+</div>
+{% endblock %}

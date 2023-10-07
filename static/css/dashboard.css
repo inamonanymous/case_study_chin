@@ -1,0 +1,26 @@
+/* styles.css */
+.left-panel {
+    width: 20%;
+    background-color: #333;
+    color: #fff;
+    float: left;
+}
+
+.left-panel ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.left-panel li {
+    padding: 10px;
+}
+
+.left-panel a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.content {
+    width: 80%;
+    float: left;
+}
