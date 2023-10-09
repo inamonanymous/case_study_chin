@@ -1,26 +1,57 @@
-{% extends "layout.html" %}
-{% block body %}
-<h1>Calendars for the Year 2023</h1>
-    
-    {% for month_data in months %}
-        <h2>{{ month_data['month_name'] }}</h2>
-        <table>
-            <tr>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-                <th>Saturday</th>
-                <th>Sunday</th>
-            </tr>
-            {% for row in month_data['calendar'].split('\n')[2:] %}
+<div>
+    <h1>Calendars for the Year 2023</h1>
+        
+        {% for month_data in months %}
+            <h2>{{ month_data['month_name'] }}</h2>
+            <table>
                 <tr>
-                    {% for day in row.split() %}
-                        <td>{{ day }}</td>
-                    {% endfor %}
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
                 </tr>
-            {% endfor %}
-        </table>
-    {% endfor %}
-{% endblock %}
+                {% for row in month_data['calendar'].split('\n')[2:] %}
+                    <tr>
+                        {% for day in row.split() %}
+                            <td>{{ day }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endfor %}
+    
+</div>
+<div>
+    <div>
+        <form action="">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name">
+            <br>
+            <label for="address">Address</label>
+            <input type="text" name="address" id="address">
+            <br>
+            <label for="phone_no">Phone</label>
+            <input type="text" name="phone_no" id="phone_no">
+            <br>
+            <label for="email_address">Email Address</label>
+            <input type="text" name="email_address" id="email_address">
+            <br>
+            <label for="reservation_date">Reservation Date</label>
+            <input type="text" name="reservation_date" id="reservation_date">
+            <br>
+            <label for="reservation_time">Reservation Time</label>
+            <input type="text" name="reservation_time" id="reservation_time">
+            <br>
+            <label for="no_receipt">No. of Receipts</label>
+            <input type="text" name="no_receipt" id="no_receipt">
+            <br>
+            <button type="submit">
+                Book now
+            </button>
+        </form>
+    </div>
+    
+</div>

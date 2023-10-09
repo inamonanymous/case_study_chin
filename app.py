@@ -5,13 +5,15 @@ import calendar
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/db_event_management'
 app.secret_key = 'putanginamochin'
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+
 db.init_app(app)
+
 
 def generate_calendar(year, month):
     cal = calendar.month(year, month)
     return cal
 
-@app.route('/calendar')
 def display_calendar():
     months = []
     
@@ -21,7 +23,7 @@ def display_calendar():
         cal = generate_calendar(year, month)
         months.append({'month_name': calendar.month_name[month], 'calendar': cal})
 
-    return render_template('events-calendar.html', months=months)
+    return months
 
 @app.route('/option/<option>')
 def option(option):
@@ -33,7 +35,8 @@ def option(option):
 def dashboard():
     if 'email' in session:
         selected_option = request.args.get('option', 'option1')
-        return render_template('dashboard.html', selected_option=selected_option)
+        months = display_calendar()
+        return render_template('dashboard.html', selected_option=selected_option, months=months)
     return redirect(url_for('index'))
 
 @app.route('/authenticate', methods=['POST', 'GET'])
@@ -50,4 +53,4 @@ def index():
     return render_template('index.html')
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port="5001")
