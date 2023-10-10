@@ -1,34 +1,124 @@
+
 <div>
     <h1>Calendars for the Year 2023</h1>
-        
-        {% for month_data in months %}
-            <h2>{{ month_data['month_name'] }}</h2>
-            <table>
+    <button id="prevMonth">Previous Month</button>
+    <button id="nextMonth">Next Month</button>
+    <div id="currentMonth">
+        <!-- Current month content will be inserted here -->
+        <h2>{{ current_month_data['month_name'] }}</h2>
+        <table>
+            <tr>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+            </tr>
+            {% for row in current_month_data['calendar'].split('\n')[2:] %}
                 <tr>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                    <th>Sunday</th>
+                    {% for day in row.split() %}
+                        <td>{{ day }}</td>
+                    {% endfor %}
                 </tr>
-                {% for row in month_data['calendar'].split('\n')[2:] %}
-                    <tr>
-                        {% for day in row.split() %}
-                            <td>{{ day }}</td>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
-            </table>
-        {% endfor %}
-    
+            {% endfor %}
+        </table>
+    </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const currentMonthDiv = document.getElementById("currentMonth");
+        const prevMonthButton = document.getElementById("prevMonth");
+        const nextMonthButton = document.getElementById("nextMonth");
+
+        // Initialize currentYear and currentMonthIndex
+        let currentYear = new Date().getFullYear();
+        let currentMonthIndex = new Date().getMonth();
+
+        // Function to generate a calendar for a given month and year
+        function generateCalendar(year, month) {
+    // Make an AJAX request to get calendar data for the specified month and year
+    fetch(`/get_calendar/${year}/${month + 1}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Remove leading spaces from each line of the calendar data
+            const trimmedCalendar = data['calendar'].split('\n').map(line => line.trim()).join('\n');
+            
+            // Update the calendar content with the new data
+            currentMonthDiv.innerHTML = `
+                <h2>${data['month_name']}</h2>
+                <table>
+                    <tr>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                        <th>Saturday</th>
+                        <th>Sunday</th>
+                    </tr>
+                    ${trimmedCalendar.split('\n').slice(2).map(row => `
+                        <tr>${row.split(' ').map(day => `<td>${day}</td>`).join('')}</tr>
+                    `).join('')}
+                </table>`;
+        })
+        .catch(error => console.error('Error fetching calendar data:', error));
+}
+
+
+        // Event listener for the next month button
+        nextMonthButton.addEventListener("click", () => {
+            // Increment the month
+            currentMonthIndex++;
+            if (currentMonthIndex > 11) {
+                currentMonthIndex = 0;
+                currentYear++;
+            }
+
+            // Generate and display the calendar for the next month
+            generateCalendar(currentYear, currentMonthIndex);
+        });
+
+        // Event listener for the previous month button
+        prevMonthButton.addEventListener("click", () => {
+            // Decrement the month
+            currentMonthIndex--;
+            if (currentMonthIndex < 0) {
+                currentMonthIndex = 11;
+                currentYear--;
+            }
+
+            // Generate and display the calendar for the previous month
+            generateCalendar(currentYear, currentMonthIndex);
+        });
+
+        // Initial load of the calendar
+        generateCalendar(currentYear, currentMonthIndex);
+    });
+</script>
+
+
+
+
 <div>
     <div>
-        <form action="">
+        <form action="/save_booking_event" method="post">
             <label for="name">Name</label>
-            <input type="text" name="name" id="name">
+            <select name="name" id="name">
+                {% for i in users_all_obj %}
+                <option value="value" selected>Select User!</option>
+                <option value="{{ i.id }}">{{ i.name }}</option>
+                {% endfor %}
+            </select>
+
+            
             <br>
             <label for="address">Address</label>
             <input type="text" name="address" id="address">
@@ -45,8 +135,8 @@
             <label for="reservation_time">Reservation Time</label>
             <input type="text" name="reservation_time" id="reservation_time">
             <br>
-            <label for="no_receipt">No. of Receipts</label>
-            <input type="text" name="no_receipt" id="no_receipt">
+            <label for="no_people">No. of People</label>
+            <input type="text" name="no_people" id="no_people">
             <br>
             <button type="submit">
                 Book now

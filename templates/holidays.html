@@ -1,0 +1,43 @@
+<div>
+    <table>
+        <thead>
+            <th>
+                Holiday Date
+            </th>
+            <th>
+                Holiday Reason
+            </th>
+            <th>
+                Action
+            </th>
+        </thead>
+        <tbody>
+            {% for i in holidays_all_obj %}
+            <tr>
+                <td>
+                    {{ i.date }}
+                </td>
+                <td>
+                    {{ i.reason }}
+                </td>
+                <td>
+                    <button>
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div>
+    <form action="/save_holiday" method="post">
+        <label for="date">Holiday Date</label>
+        <input type="text" name="date" id="date">
+        <br>
+        <label for="reason">Holiday Reason</label>
+        <input type="text" name="reason" id="reason">
+        <br>
+        <button type="submit">Add Holiday</button>
+    </form>
+</div>

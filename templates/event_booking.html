@@ -1,0 +1,60 @@
+<table>
+    <thead>
+        <th>
+            Name
+        </th>
+        <th>
+            No. of People
+        </th>
+        <th>
+            Phone
+        </th>
+        <th>
+            Booking Date
+        </th>
+        <th>
+            Number of People
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+            Action
+        </th>
+    </thead>
+    <tbody>
+        {% for i in events_and_user_combined %}
+        <tr>
+            <td>
+                {{ i.name }}
+            </td>
+            <td>
+                {{ i.ucount }}
+            </td>
+            <td>
+                {{ i.phone }}
+            </td>
+            <td>
+                {{ i.bdate }}
+            </td>
+            <td>
+                {{ i.ucount }}
+            </td>
+            <td>
+                {{ i.status }}
+            </td>
+            <td>
+                <button>
+                    Approve
+                </button>
+                <button>
+                    Deny
+                </button>
+                <button>
+                    Delete
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

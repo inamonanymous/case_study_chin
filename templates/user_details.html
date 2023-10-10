@@ -22,23 +22,30 @@
             <th>
                 Action
             </th>
+            <th>
+                Bdate
+            </th>
         </thead>
         <tbody>
+            {% for i in users_all_obj %}
             <tr>
                 <td>
-                    static
+                    {{ i.name }}
                 </td>
                 <td>
-                    static
+                    {{ i.address }}
                 </td>
                 <td>
-                    static
+                    {{ i.email }}
                 </td>
                 <td>
-                    static
+                    {{ i.phone }}
                 </td>
                 <td>
-                    admin/staff
+                    {{ i.type }}
+                </td>
+                <td>
+                    {{ i.status }}
                 </td>
                 <td>
                     <button>
@@ -48,7 +55,11 @@
                         Delete
                     </button>
                 </td>
+                <td>
+                    {{ i.bdate }}
+                </td>
             </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>

@@ -15,16 +15,20 @@
 <div class="content">
     {% if selected_option == 'option1' %}
     <div>
-        {% block include_calendar %}
-            {% include 'events-calendar.html' %}
-        {% endblock %}
+        {% include 'events-calendar.html' %}
     </div>
     {% elif selected_option == 'option2' %}
-    <div>Content for Option 2</div>
+    <div>
+        {% include 'user_details.html' %}
+    </div>
     {% elif selected_option == 'option3' %}
-    <div>Content for Option 3</div>
+    <div>
+        {% include 'holidays.html' %}
+    </div>
     {% elif selected_option == 'option4' %}
-    <div>Content for Option 4</div>
+    <div>
+        {% include 'event_booking.html' %}
+    </div>
     {% endif %}
 </div>
 {% endblock %}
