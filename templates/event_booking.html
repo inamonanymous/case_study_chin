@@ -1,60 +1,38 @@
-<table>
-    <thead>
-        <th>
-            Name
-        </th>
-        <th>
-            No. of People
-        </th>
-        <th>
-            Phone
-        </th>
-        <th>
-            Booking Date
-        </th>
-        <th>
-            Number of People
-        </th>
-        <th>
-            Status
-        </th>
-        <th>
-            Action
-        </th>
-    </thead>
-    <tbody>
-        {% for i in events_and_user_combined %}
-        <tr>
-            <td>
-                {{ i.name }}
-            </td>
-            <td>
-                {{ i.ucount }}
-            </td>
-            <td>
-                {{ i.phone }}
-            </td>
-            <td>
-                {{ i.bdate }}
-            </td>
-            <td>
-                {{ i.ucount }}
-            </td>
-            <td>
-                {{ i.status }}
-            </td>
-            <td>
-                <button>
-                    Approve
-                </button>
-                <button>
-                    Deny
-                </button>
-                <button>
-                    Delete
-                </button>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>No. of People</th>
+                        <th>Phone</th>
+                        <th>Reservation Date</th>
+                        <th>Booking Date</th>
+                        <th>Number of People</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in events_and_user_combined %}
+                    <tr>
+                        <td>{{ i.name }}</td>
+                        <td>{{ i.ucount }}</td>
+                        <td>{{ i.phone }}</td>
+                        <td>{{ i.rdate }}</td>
+                        <td>{{ i.bdate }}</td>
+                        <td>{{ i.ucount }}</td>
+                        <td>{{ i.status }}</td>
+                        <td>
+                            <button class="btn btn-success">Approve</button>
+                            <button class="btn btn-danger">Deny</button>
+                            <button class="btn btn-warning">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

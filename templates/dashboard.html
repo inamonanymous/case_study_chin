@@ -5,11 +5,19 @@
 
 {% block body %}
 <div class="left-panel">
-    <ul>
-        <li><a href="{{ url_for('option', option='option1') }}">Events Calendar</a></li>
-        <li><a href="{{ url_for('option', option='option2') }}">User Details</a></li>
-        <li><a href="{{ url_for('option', option='option3') }}">Holidays</a></li>
-        <li><a href="{{ url_for('option', option='option4') }}">Event Booking</a></li>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('option', option='option1') }}">Events Calendar</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('option', option='option2') }}">User Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('option', option='option3') }}">Holidays</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('option', option='option4') }}">Event Booking</a>
+        </li>
     </ul>
 </div>
 <div class="content">

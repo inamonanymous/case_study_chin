@@ -1,147 +1,83 @@
 
-<div>
-    <h1>Calendars for the Year 2023</h1>
-    <button id="prevMonth">Previous Month</button>
-    <button id="nextMonth">Next Month</button>
-    <div id="currentMonth">
-        <!-- Current month content will be inserted here -->
-        <h2>{{ current_month_data['month_name'] }}</h2>
-        <table>
-            <tr>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-                <th>Saturday</th>
-                <th>Sunday</th>
-            </tr>
-            {% for row in current_month_data['calendar'].split('\n')[2:] %}
-                <tr>
-                    {% for day in row.split() %}
+<div class="container">
+    <div id="dynamicCalendar"></div>
+    <div class="calendar-container">
+        
+        <div class="text-center mt-3">
+            <button id="prevMonth" class="btn btn-primary">Previous Month</button>
+            <button id="nextMonth" class="btn btn-primary">Next Month</button>
+        </div>
+        <div id="currentMonth" class="mt-4">
+            <h2 class="mb-3">{{ current_month_data['month_name'] }}</h2>
+            <table class="table table-bordered table-responsive">
+                <thead>
+                    <tr>
+                        <th class="table-dark">Sunday</th>
+                        <th class="table-dark">Monday</th>
+                        <th class="table-dark">Tuesday</th>
+                        <th class="table-dark">Wednesday</th>
+                        <th class="table-dark">Thursday</th>
+                        <th class="table-dark">Friday</th>
+                        <th class="table-dark">Saturday</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in current_month_data['calendar'].split('\n')[2:] %}
+                    <tr>
+                        {% for day in row.split() %}
                         <td>{{ day }}</td>
+                        {% endfor %}
+                    </tr>
                     {% endfor %}
-                </tr>
-            {% endfor %}
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const currentMonthDiv = document.getElementById("currentMonth");
-        const prevMonthButton = document.getElementById("prevMonth");
-        const nextMonthButton = document.getElementById("nextMonth");
-
-        // Initialize currentYear and currentMonthIndex
-        let currentYear = new Date().getFullYear();
-        let currentMonthIndex = new Date().getMonth();
-
-        // Function to generate a calendar for a given month and year
-        function generateCalendar(year, month) {
-    // Make an AJAX request to get calendar data for the specified month and year
-    fetch(`/get_calendar/${year}/${month + 1}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Remove leading spaces from each line of the calendar data
-            const trimmedCalendar = data['calendar'].split('\n').map(line => line.trim()).join('\n');
-            
-            // Update the calendar content with the new data
-            currentMonthDiv.innerHTML = `
-                <h2>${data['month_name']}</h2>
-                <table>
-                    <tr>
-                        <th>Monday</th>
-                        <th>Tuesday</th>
-                        <th>Wednesday</th>
-                        <th>Thursday</th>
-                        <th>Friday</th>
-                        <th>Saturday</th>
-                        <th>Sunday</th>
-                    </tr>
-                    ${trimmedCalendar.split('\n').slice(2).map(row => `
-                        <tr>${row.split(' ').map(day => `<td>${day}</td>`).join('')}</tr>
-                    `).join('')}
-                </table>`;
-        })
-        .catch(error => console.error('Error fetching calendar data:', error));
-}
 
 
-        // Event listener for the next month button
-        nextMonthButton.addEventListener("click", () => {
-            // Increment the month
-            currentMonthIndex++;
-            if (currentMonthIndex > 11) {
-                currentMonthIndex = 0;
-                currentYear++;
-            }
-
-            // Generate and display the calendar for the next month
-            generateCalendar(currentYear, currentMonthIndex);
-        });
-
-        // Event listener for the previous month button
-        prevMonthButton.addEventListener("click", () => {
-            // Decrement the month
-            currentMonthIndex--;
-            if (currentMonthIndex < 0) {
-                currentMonthIndex = 11;
-                currentYear--;
-            }
-
-            // Generate and display the calendar for the previous month
-            generateCalendar(currentYear, currentMonthIndex);
-        });
-
-        // Initial load of the calendar
-        generateCalendar(currentYear, currentMonthIndex);
-    });
-</script>
-
-
-
-
-<div>
-    <div>
-        <form action="/save_booking_event" method="post">
-            <label for="name">Name</label>
-            <select name="name" id="name">
-                {% for i in users_all_obj %}
-                <option value="value" selected>Select User!</option>
-                <option value="{{ i.id }}">{{ i.name }}</option>
-                {% endfor %}
-            </select>
-
-            
-            <br>
-            <label for="address">Address</label>
-            <input type="text" name="address" id="address">
-            <br>
-            <label for="phone_no">Phone</label>
-            <input type="text" name="phone_no" id="phone_no">
-            <br>
-            <label for="email_address">Email Address</label>
-            <input type="text" name="email_address" id="email_address">
-            <br>
-            <label for="reservation_date">Reservation Date</label>
-            <input type="text" name="reservation_date" id="reservation_date">
-            <br>
-            <label for="reservation_time">Reservation Time</label>
-            <input type="text" name="reservation_time" id="reservation_time">
-            <br>
-            <label for="no_people">No. of People</label>
-            <input type="text" name="no_people" id="no_people">
-            <br>
-            <button type="submit">
-                Book now
-            </button>
-        </form>
+<div class="container mt-5">
+    <div class="form-container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form action="/save_booking_event" method="post">
+                    <div class="form-group">
+                        <label for="name">Staff Name</label>
+                        <select name="name" id="name" class="form-control">
+                            <option value="" selected disabled>Select User</option>
+                            {% for i in users_all_obj %}
+                            <option value="{{ i.id }}">{{ i.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Client Address</label>
+                        <input type="text" name="address" id="address" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone_no">Client Phone</label>
+                        <input type="text" name="phone_no" id="phone_no" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="email_address">Client Email Address</label>
+                    <input type="text" name="email_address" id="email_address" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="reservation_date">Reservation Date</label>
+                    <input type="text" name="reservation_date" id="reservation_date" class="form-control" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD">
+                </div>
+                <div class="form-group">
+                    <label for="reservation_time">Reservation Time</label>
+                    <input type="text" name="reservation_time" id="reservation_time" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="no_people">No. of People</label>
+                    <input type="text" name="no_people" id="no_people" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Book Now</button>
+            </form>
+        </div>
     </div>
-    
+    </div>
 </div>

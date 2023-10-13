@@ -1,0 +1,35 @@
+/* Style for the days with numbers */
+td {
+    background-color: #e8e8e8;
+    font-weight: bold;
+    text-align: center; /* Align text in the center */
+}
+
+/* Style for Sundays and Saturdays */
+td.sunday {
+    background-color: #ffb6b6;
+}
+
+td.saturday {
+    background-color: #b6c4ff;
+}
+
+.table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 5px;
+    text-align: center;
+}

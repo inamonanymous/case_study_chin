@@ -1,23 +1,22 @@
-<div>
-    <form action="/save_user", method="post">
-        <label for="name">Name</label>
-        <input type="text" name="name" id="name">
-        <br>
-        <label for="address">Address</label>
-        <input type="text" name="address" id="address">
-        <br>
-        
-        <label for="email_address">Email address</label>
-        <input type="text" name="email_address" id="email_address">
-        <br>
-        <label for="phone_no">Phone number</label>
-        <input type="text" name="phone_no" id="phone_no">
-        <br>
-        <label for="user_role">User Role</label>
-        <input type="text" name="user_role" id="user_role">
-        <br>
-        <button type="submit">
-            Add User
-        </button>
+<div class="container">
+    <form action="/save_user" method="post">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" name="name" id="name">
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" name="address" id="address">
+        </div>
+        <div class="form-group">
+            <label for="email_address">Email address</label>
+            <input type="text" class="form-control" name="email_address" id="email_address">
+        </div>
+        <div class="form-group">
+            <label for="phone_no">Phone number</label>
+            <input type="text" class="form-control" name="phone_no" id="phone_no">
+        </div>
+        <button type="submit" class="btn btn-primary">Add User</button>
     </form>
 </div>
+

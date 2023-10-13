@@ -1,43 +1,41 @@
-<div>
-    <table>
-        <thead>
-            <th>
-                Holiday Date
-            </th>
-            <th>
-                Holiday Reason
-            </th>
-            <th>
-                Action
-            </th>
-        </thead>
-        <tbody>
-            {% for i in holidays_all_obj %}
-            <tr>
-                <td>
-                    {{ i.date }}
-                </td>
-                <td>
-                    {{ i.reason }}
-                </td>
-                <td>
-                    <button>
-                        Delete
-                    </button>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-<div>
-    <form action="/save_holiday" method="post">
-        <label for="date">Holiday Date</label>
-        <input type="text" name="date" id="date">
-        <br>
-        <label for="reason">Holiday Reason</label>
-        <input type="text" name="reason" id="reason">
-        <br>
-        <button type="submit">Add Holiday</button>
-    </form>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Holiday Date</th>
+                        <th>Holiday Reason</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in holidays_all_obj %}
+                    <tr>
+                        <td>{{ i.date }}</td>
+                        <td>{{ i.reason }}</td>
+                        <td>
+                            <button class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form action="/save_holiday" method="post">
+                <div class="form-group">
+                    <label for="date">Holiday Date</label>
+                    <input type="text" class="form-control" id="date" name="date" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY:MM:DD" required>
+                </div>
+                <div class="form-group">
+                    <label for="reason">Holiday Reason</label>
+                    <input type="text" class="form-control" name="reason" id="reason">
+                </div>
+                <button type="submit" class="btn btn-primary">Add Holiday</button>
+            </form>
+        </div>
+    </div>
 </div>
