@@ -32,12 +32,16 @@ Instructions to Open the Project:
       Create new virtual environment. Inside the "case_study_chin" open terminal
     </li>
     <li>
-      <li>In the terminal enter command: "py -3 -m venv venv" <- for windows (just the text inside the quotes) </li>
-      <li>In the terminal enter command: "python3 -m venv venv" <- for linux (just the text inside the quotes) </li>
+      <ul>
+        <li>In the terminal enter command: "py -3 -m venv venv" <- for windows (just the text inside the quotes) </li>
+        <li>In the terminal enter command: "python3 -m venv venv" <- for linux (just the text inside the quotes) </li>
+      </ul>
     </li>
     <li>
-      <li>Activate the terminal by entering this command: "venv/scripts/activate" <- for windows (just the text inside the quotes) </li>
-      <li>Activate the terminal by entering this command: "source venv/bin/activate" <- for linux (just the text inside the quotes) </li>
+      <ul>
+        <li>Activate the terminal by entering this command: "venv/scripts/activate" <- for windows (just the text inside the quotes) </li>
+        <li>Activate the terminal by entering this command: "source venv/bin/activate" <- for linux (just the text inside the quotes) </li>
+      </ul>
     </li>
     <li>
       After activating the Virtual Environment, enter this command: "pip install -r requirements.txt" <- (just the text inside the quotes)
