@@ -15,7 +15,9 @@
                         <td>{{ i.date }}</td>
                         <td>{{ i.reason }}</td>
                         <td>
-                            <button class="btn btn-danger">Delete</button>
+                            <a href="/delete_holiday/{{ i.id }}">
+                                <button class="btn btn-danger">Delete</button>
+                            </a>
                         </td>
                     </tr>
                     {% endfor %}

@@ -12,8 +12,6 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 db.init_app(app)
 
-
-
 @app.route('/delete_event/<int:id>', methods=['POST', 'GET'])
 def delete_event(id):
     if 'email' in session:
@@ -61,6 +59,18 @@ def approve_event(id):
         except:
             print("Can't Approve Approved Event")
             return redirect('/option/option4')
+        return redirect(url_for('dashboard'))
+    return redirect(url_for('index'))
+
+@app.route('/delete_holiday/<int:id>', methods=['POST', 'GET'])
+def delete_holiday(id):
+    if 'email' in session:
+        current_user = Users.query.filter_by(email=session.get('email', "")).first()
+        if current_user.type=="admin":
+            target_holiday = Holidays.query.filter_by(id=id).first()
+            db.session.delete(target_holiday)
+            db.session.commit()
+            return redirect('/option/option3')
         return redirect(url_for('dashboard'))
     return redirect(url_for('index'))
 
