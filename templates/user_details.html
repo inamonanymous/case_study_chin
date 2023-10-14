@@ -21,11 +21,21 @@
                         <td>{{ i.address }}</td>
                         <td>{{ i.email }}</td>
                         <td>{{ i.phone }}</td>
-                        <td>{{ i.type }}</td>
-                        <td>{{ i.status }}</td>
+                        <td>{{ i.type|capitalize }}</td>
+                        <td>{{ i.status|capitalize }}</td>
                         <td>
-                            <button class="btn btn-warning">Lock</button>
-                            <button class="btn btn-danger">Delete</button>
+                            {% if i.status == "active" and i.type == "staff" %}
+                            <a href="/lock_staff/{{ i.id }}">
+                                <button class="btn btn-warning">Lock</button>
+                            </a>
+                            {% elif i.status == "locked" and i.type == "staff" %}
+                            <a href="/unlock_staff/{{ i.id }}">
+                                <button class="btn btn-warning">Unlock</button>
+                            </a>
+                            <a href="/delete_staff/{{ i.id }}">
+                                <button class="btn btn-danger">Delete</button>
+                            </a>
+                            {% endif %}
                         </td>
                         <td>{{ i.bdate }}</td>
                     </tr>

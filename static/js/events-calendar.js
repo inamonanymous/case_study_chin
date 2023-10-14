@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const currentMonthDiv = document.getElementById("currentMonth");
     const prevMonthButton = document.getElementById("prevMonth");
     const nextMonthButton = document.getElementById("nextMonth");
+    let events = null;
 
     let currentYear = new Date().getFullYear();
     let currentMonthIndex = new Date().getMonth();
@@ -10,11 +11,11 @@ document.addEventListener("DOMContentLoaded", function () {
         // Implement logic to calculate the first day of the month and the number of days in the month
         const firstDay = new Date(year, month, 1).getDay();
         const lastDay = new Date(year, month + 1, 0).getDate();
-    
+
         // Create the table for the calendar
         const table = document.createElement("table");
         table.classList.add("table");
-    
+
         // Create the header row with weekday names
         const headerRow = document.createElement("tr");
         const monthYearCell = document.createElement("th");
@@ -23,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
         monthYearCell.classList.add("table-dark");
         headerRow.appendChild(monthYearCell);
         table.appendChild(headerRow);
-    
+
         // Create the header row with weekday names
         const weekdayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         const weekdaysRow = document.createElement("tr");
@@ -34,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
             weekdaysRow.appendChild(th);
         });
         table.appendChild(weekdaysRow);
-    
+
         // Create the calendar rows
         let day = 1;
         for (let i = 0; i < 6; i++) {
@@ -45,20 +46,35 @@ document.addEventListener("DOMContentLoaded", function () {
                     td.textContent = "";
                 } else {
                     td.textContent = day;
+                    
+                    const formattedDate = `${year}-${(month + 1).toString().padStart(2, '0')}-${td.textContent.padStart(2, '0')}`;
+                    if (events) {
+                        events.holidays.forEach(holiday => {
+                            if (holiday.date === formattedDate) {
+                                td.textContent = `${day} - Holiday: ${holiday.reason}`;
+                                td.classList.add("holiday-date");
+                                td.style.backgroundColor = "violet"
+                            }
+                            });
+
+                        events.reservations.forEach(reservation => {
+                            if (reservation.date === formattedDate) {
+                                td.textContent = `${day} - Staff: ${reservation.user_name}`;
+                                td.classList.add("reservation-date");
+                                td.style.backgroundColor = "green";
+                            }
+                        });
+                    }
                     day++;
                 }
                 calendarRow.appendChild(td);
             }
             table.appendChild(calendarRow);
-            if (day > lastDay) {
-                break;
-            }
         }
-    
+
         currentMonthDiv.innerHTML = ''; // Clear the content
         currentMonthDiv.appendChild(table);
     }
-    
 
     // Event listener for the next month button
     nextMonthButton.addEventListener("click", () => {
@@ -80,20 +96,12 @@ document.addEventListener("DOMContentLoaded", function () {
         generateCalendar(currentYear, currentMonthIndex);
     });
 
-    generateCalendar(currentYear, currentMonthIndex);
-
-    function updateDynamicCalendar(year, month) {
-        fetch(`/get_calendar/${year}/${month}`)
-            .then(response => response.json())
-            .then(data => {
-                // Update the dynamicCalendar div with the fetched calendar data
-                dynamicCalendarDiv.innerHTML = `
-                    <h2>${data.month_name}</h2>
-                    <pre>${data.calendar}</pre>`;
-            })
-            .catch(error => console.error('Error fetching calendar data:', error));
-    }
-
-    // Call the updateDynamicCalendar function with the desired year and month
-    updateDynamicCalendar(2023, 1)
+    // Fetch the event and holiday data and update the calendar here
+    fetch(`/get_calendar/${currentYear}/${currentMonthIndex}`)
+        .then(response => response.json())
+        .then(data => {
+            events = data.events;
+            generateCalendar(currentYear, currentMonthIndex);
+        })
+        .catch(error => console.error('Error fetching calendar data:', error));
 });

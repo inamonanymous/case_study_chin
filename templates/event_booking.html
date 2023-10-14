@@ -23,11 +23,17 @@
                         <td>{{ i.rdate }}</td>
                         <td>{{ i.bdate }}</td>
                         <td>{{ i.ucount }}</td>
-                        <td>{{ i.status }}</td>
+                        <td>{{ i.status|capitalize }}</td>
                         <td>
-                            <button class="btn btn-success">Approve</button>
-                            <button class="btn btn-danger">Deny</button>
-                            <button class="btn btn-warning">Delete</button>
+                            <a href="/approve_event/{{ i.id }}">
+                                <button class="btn btn-success">Approve</button>
+                            </a>
+                            <a href="/deny_event/{{ i.id }}">
+                                <button class="btn btn-danger">Deny</button>
+                            </a>
+                            <a href="/delete_event/{{ i.id }}">
+                                <button class="btn btn-warning">Delete</button>
+                            </a>
                         </td>
                     </tr>
                     {% endfor %}

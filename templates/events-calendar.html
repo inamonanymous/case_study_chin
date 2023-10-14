@@ -10,25 +10,9 @@
         <div id="currentMonth" class="mt-4">
             <h2 class="mb-3">{{ current_month_data['month_name'] }}</h2>
             <table class="table table-bordered table-responsive">
-                <thead>
-                    <tr>
-                        <th class="table-dark">Sunday</th>
-                        <th class="table-dark">Monday</th>
-                        <th class="table-dark">Tuesday</th>
-                        <th class="table-dark">Wednesday</th>
-                        <th class="table-dark">Thursday</th>
-                        <th class="table-dark">Friday</th>
-                        <th class="table-dark">Saturday</th>
-                    </tr>
-                </thead>
+                
                 <tbody>
-                    {% for row in current_month_data['calendar'].split('\n')[2:] %}
-                    <tr>
-                        {% for day in row.split() %}
-                        <td>{{ day }}</td>
-                        {% endfor %}
-                    </tr>
-                    {% endfor %}
+                    
                 </tbody>
             </table>
         </div>

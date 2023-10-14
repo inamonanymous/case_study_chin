@@ -28,6 +28,11 @@ class Reservations(db.Model):
     status = db.Column(db.String(10), nullable=False)
     comments = db.Column(db.String(250), nullable=False)
     bdate = db.Column(db.String(100), nullable=False)
+    caddress = db.Column(db.String(250), nullable=False)
+    cphone_no = db.Column(db.String(20), nullable=False)
+    cemail_address = db.Column(db.String(250), nullable=False)
+    rtime = db.Column(db.String(20), nullable=False)
+
 
 class Holidays(db.Model):
     __tablename__ = 'holidays'
