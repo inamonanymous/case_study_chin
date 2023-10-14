@@ -25,15 +25,18 @@
                         <td>{{ i.ucount }}</td>
                         <td>{{ i.status|capitalize }}</td>
                         <td>
+                            {% if i.status == "pending" %}
                             <a href="/approve_event/{{ i.id }}">
                                 <button class="btn btn-success">Approve</button>
                             </a>
                             <a href="/deny_event/{{ i.id }}">
                                 <button class="btn btn-danger">Deny</button>
                             </a>
+                            {% elif i.status == "denied" or i.status == "pending" %}
                             <a href="/delete_event/{{ i.id }}">
                                 <button class="btn btn-warning">Delete</button>
                             </a>
+                            {% endif %}
                         </td>
                     </tr>
                     {% endfor %}

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 10, 2023 at 07:28 PM
+-- Generation Time: Oct 14, 2023 at 08:55 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -52,7 +52,15 @@ CREATE TABLE `holidays` (
 --
 
 INSERT INTO `holidays` (`id`, `date`, `reason`, `bdate`) VALUES
-(1, '2024-9-19', 'birthdaynipanot', '2023-10-10 20:26:25.223838');
+(1, '2024-09-19', 'birthdaynipanot', '2023-10-10 20:26:25.223838'),
+(2, '2023-12-25', 'Christmas', '2023-10-11 01:37:34.031398'),
+(3, '2023-10-18', 'School Day', '2023-10-11 21:39:01.366399'),
+(4, '2024-09-19', 'a', '2023-10-14 05:16:38.155792'),
+(6, '2025-09-19', '2', '2023-10-14 05:27:05.469598'),
+(7, '2024-10-19', 'a', '2023-10-14 05:31:42.543037'),
+(8, '2023-10-10', 'asd', '2023-10-14 05:33:11.944586'),
+(9, '2023-11-01', 'Undas', '2023-10-14 23:46:50.543590'),
+(10, '2023-01-01', 'New Year', '2023-10-15 01:08:36.510770');
 
 -- --------------------------------------------------------
 
@@ -67,15 +75,26 @@ CREATE TABLE `reservations` (
   `rdate` varchar(100) NOT NULL,
   `status` varchar(10) NOT NULL,
   `comments` varchar(250) NOT NULL,
-  `bdate` varchar(100) NOT NULL
+  `bdate` varchar(100) NOT NULL,
+  `caddress` varchar(250) NOT NULL,
+  `cphone_no` varchar(20) NOT NULL,
+  `cemail_address` varchar(250) NOT NULL,
+  `rtime` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `reservations`
 --
 
-INSERT INTO `reservations` (`id`, `uid`, `ucount`, `rdate`, `status`, `comments`, `bdate`) VALUES
-(1, 1, 4, '2023-10-30', 'PENDING', '', '2023-10-10 18:01:11.195614');
+INSERT INTO `reservations` (`id`, `uid`, `ucount`, `rdate`, `status`, `comments`, `bdate`, `caddress`, `cphone_no`, `cemail_address`, `rtime`) VALUES
+(1, 1, 4, '2023-10-30', 'approved', '', '2023-10-10 18:01:11.195614', '', '', '', ''),
+(2, 2, 6, '2023-11-30', 'pending', '', '2023-10-11 01:35:53.597866', '', '', '', ''),
+(3, 4, 5, '2023-10-17', 'pending', '', '2023-10-11 21:38:32.995736', '', '', '', ''),
+(4, 6, 4, '09789456123', 'approved', '', '2023-10-14 05:16:13.479023', '', '', '', ''),
+(5, 5, 70, '2023-11-10', 'approved', '', '2023-10-14 05:34:24.699091', '', '', '', ''),
+(6, 7, 420, '2024-04-20', 'approved', '', '2023-10-15 00:18:56.233804', '', '', '', ''),
+(8, 8, 6, '2024-04-20', 'pending', '', '2023-10-15 01:18:23.103966', 'Bagiuo', '01239103213', 'smoker@gmail.com', '08:00'),
+(11, 7, 420, '2025-12-01', 'denied', '', '2023-10-15 02:54:32.955500', 'Bagiuo', '98349284', 'ali@yahoo.com', '4:20');
 
 -- --------------------------------------------------------
 
@@ -167,8 +186,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `pwd`, `address`, `phone`, `email`, `type`, `status`, `bdate`) VALUES
-(1, 'Chin Tuano', 'password', 'Laguna ', '09123456789', 'chin@yahoo.com', 'admin', 'active', '1995-12-20 10:00:08'),
-(2, 'Alyza Aliman', 'password', 'Calamba', '198302', 'ali@yahoo.com', 'staff', 'active', 'not set');
+(1, 'Chin Tuano', 'password', 'Laguna ', '09123456789', 'chin@yahoo.com', 'staff', 'locked', '1995-12-20 10:00:08'),
+(5, 'admin', 'password', 'unidentified', 'unidentified', 'unidentified@email.com', 'admin', 'active', 'not set'),
+(6, 'Alyza Aliman', 'password', 'Calamba', '198302', 'ali@yahoo.com', 'staff', 'locked', 'not set'),
+(7, 'RV pacana', 'password', 'Mabuhay', '98349284', 'rv@email.com', 'staff', 'locked', 'not set');
 
 --
 -- Indexes for dumped tables
@@ -236,13 +257,13 @@ ALTER TABLE `frontdest_users`
 -- AUTO_INCREMENT for table `holidays`
 --
 ALTER TABLE `holidays`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tbl_frontdesk_users`
@@ -272,7 +293,7 @@ ALTER TABLE `tbl_users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
