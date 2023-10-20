@@ -12,6 +12,14 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 db.init_app(app)
 
+@app.route('/logout')
+def logout():
+    if 'email' in session:
+        session.clear()
+        return redirect(url_for('index'))
+    return redirect(url_for('index'))
+
+
 @app.route('/delete_event/<int:id>', methods=['POST', 'GET'])
 def delete_event(id):
     if 'email' in session:
@@ -95,7 +103,7 @@ def unlock_staff(id):
             target_user.status="active"
             db.session.commit()
             return redirect('/option/option2')
-        return redirect(url_for('dashboard1'))
+        return redirect(url_for('dashboard'))
     return redirect(url_for('index'))
 
 @app.route('/lock_staff/<int:id>', methods=['POST', 'GET'])
@@ -107,7 +115,7 @@ def lock_staff(id):
             target_user.status="locked"
             db.session.commit()
             return redirect('/option/option2')
-        return redirect(url_for('dashboard1'))
+        return redirect(url_for('dashboard'))
     return redirect(url_for('index'))
 
 
@@ -164,7 +172,7 @@ def save_booking_event():
         reservation_obj = Reservations.query.filter_by(rdate=reservation_date).first()
         holidays_obj = Holidays.query.filter_by(date=reservation_date).first()
         if reservation_obj or holidays_obj:
-            return "cant book any event on holidays"
+            return "<h1>cant book any event on holidays</h1>"
 
         reservation_entry = Reservations(
             uid=users_obj.id,
@@ -275,19 +283,20 @@ def dashboard():
 
 @app.route('/authenticate', methods=['POST', 'GET'])
 def authenticate():
-    
-    email, password = request.form.get('email'), request.form.get('password')
-    
-    current_user = Users.query.filter_by(email=email).first()
-    if current_user.type=="staff" and current_user.status=="locked":
-        print('account locked')
-        return redirect(url_for('index'))
-    
-    if Users.login_is_true(email, password):
-        session['email'] = email
+    try:
+        email, password = request.form.get('email'), request.form.get('password')
+        current_user = Users.query.filter_by(email=email).first()
+        if current_user.type=="staff" and current_user.status=="locked":
+            print('account locked')
+            return redirect(url_for('index'))
         
-        return redirect(url_for('dashboard'))
-    return redirect(url_for('index'))
+        if Users.login_is_true(email, password):
+            session['email'] = email
+            
+            return redirect(url_for('dashboard'))
+        return redirect(url_for('index'))
+    except:
+        return redirect(url_for('index'))
 
 @app.route('/') 
 def index():

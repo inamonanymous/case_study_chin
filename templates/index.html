@@ -1,11 +1,23 @@
 {% extends "layout.html" %}
 {% block body %}
-    <form action="/authenticate" method="post">
-        <label for="email">Email</label>
-        <input type="text" name="email" id="email">
-        <br>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password">
-        <button type="submit">Login</button>
-    </form>
-{% endblock %}    
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title text-center">Log in to Your Account</h3>
+                    <form action="/authenticate" method="post">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="email" id="email" placeholder="Email address" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Log In</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

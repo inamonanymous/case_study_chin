@@ -4,39 +4,47 @@
 {% endblock %}
 
 {% block body %}
-<div class="left-panel">
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('option', option='option1') }}">Events Calendar</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('option', option='option2') }}">User Details</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('option', option='option3') }}">Holidays</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('option', option='option4') }}">Event Booking</a>
-        </li>
-    </ul>
-</div>
-<div class="content">
-    {% if selected_option == 'option1' %}
-    <div>
-        {% include 'events-calendar.html' %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{{ url_for('logout') }}" class="btn btn-danger float-right">Logout</a>
+        </div>
     </div>
-    {% elif selected_option == 'option2' %}
-    <div>
-        {% include 'user_details.html' %}
+    <div class="left-panel">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('option', option='option1') }}">Events Calendar</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('option', option='option2') }}">User Details</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('option', option='option3') }}">Holidays</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('option', option='option4') }}">Event Booking</a>
+            </li>
+        </ul>
     </div>
-    {% elif selected_option == 'option3' %}
-    <div>
-        {% include 'holidays.html' %}
+    <div class="content">
+        {% if selected_option == 'option1' %}
+        <div>
+            {% include 'events-calendar.html' %}
+        </div>
+        {% elif selected_option == 'option2' %}
+        <div>
+            {% include 'user_details.html' %}
+        </div>
+        {% elif selected_option == 'option3' %}
+        <div>
+            {% include 'holidays.html' %}
+        </div>
+        {% elif selected_option == 'option4' %}
+        <div>
+            {% include 'event_booking.html' %}
+        </div>
+        {% endif %}
     </div>
-    {% elif selected_option == 'option4' %}
-    <div>
-        {% include 'event_booking.html' %}
-    </div>
-    {% endif %}
 </div>
 {% endblock %}
