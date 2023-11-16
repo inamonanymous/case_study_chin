@@ -1,8 +1,8 @@
-from flask import Flask, render_template, redirect, request, session, url_for, jsonify
+from flask import Flask, render_template, redirect, request, session, url_for, jsonify, flash
 from model import db, Users, Reservations, Frontdesk, Holidays
 import calendar
 from datetime import datetime
-from sqlalchemy import or_
+from sqlalchemy import or_, desc
 from sqlalchemy.orm import aliased
 
 app = Flask(__name__)
@@ -168,6 +168,9 @@ def save_user():
 def save_booking_event():
     if 'email' in session:
         name, address, phone_no, email_address, reservation_date, reservation_time, no_people = request.form['name'], request.form['address'], request.form['phone_no'], request.form['email_address'], request.form['reservation_date'], request.form['reservation_time'], request.form['no_people']
+        if datetime.strptime(reservation_date, '%Y-%m-%d') < datetime.now():
+            flash("Please reserve ahead of current time")
+            return redirect('/option/option1')
         users_obj = Users.query.filter_by(id=name).first()
         reservation_obj = Reservations.query.filter_by(rdate=reservation_date).first()
         holidays_obj = Holidays.query.filter_by(date=reservation_date).first()
@@ -241,14 +244,14 @@ def option(option):
         current_month_data = display_calendar(current_year, current_month)
 
         #return the users as list of objects
-        users_all_obj = Users.query.all()
+        users_all_obj = Users.query.order_by(Users.id.desc()).all()
 
         #return the holidays as list of objects
-        holidays_all_obj = Holidays.query.all()
+        holidays_all_obj = Holidays.query.order_by(Holidays.id.desc()).all()
         
 
         #return the events reserved as list of objects
-        reservations_all_obj = Reservations.query.all()
+        reservations_all_obj = Reservations.query.order_by(Reservations.id.desc()).all()
         events_and_user_combined = []
         for i in reservations_all_obj:
             user_obj = Users.query.filter_by(id=i.uid).first()

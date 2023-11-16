@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 14, 2023 at 09:09 PM
+-- Generation Time: Nov 16, 2023 at 04:58 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -52,15 +52,9 @@ CREATE TABLE `holidays` (
 --
 
 INSERT INTO `holidays` (`id`, `date`, `reason`, `bdate`) VALUES
-(1, '2024-09-19', 'birthdaynipanot', '2023-10-10 20:26:25.223838'),
 (2, '2023-12-25', 'Christmas', '2023-10-11 01:37:34.031398'),
 (3, '2023-10-18', 'School Day', '2023-10-11 21:39:01.366399'),
-(4, '2024-09-19', 'a', '2023-10-14 05:16:38.155792'),
-(6, '2025-09-19', '2', '2023-10-14 05:27:05.469598'),
-(7, '2024-10-19', 'a', '2023-10-14 05:31:42.543037'),
-(8, '2023-10-10', 'asd', '2023-10-14 05:33:11.944586'),
-(9, '2023-11-01', 'Undas', '2023-10-14 23:46:50.543590'),
-(10, '2023-01-01', 'New Year', '2023-10-15 01:08:36.510770');
+(9, '2023-11-01', 'Undas', '2023-10-14 23:46:50.543590');
 
 -- --------------------------------------------------------
 
@@ -94,7 +88,9 @@ INSERT INTO `reservations` (`id`, `uid`, `ucount`, `rdate`, `status`, `comments`
 (5, 5, 70, '2023-11-10', 'approved', '', '2023-10-14 05:34:24.699091', '', '', '', ''),
 (6, 7, 420, '2024-04-20', 'approved', '', '2023-10-15 00:18:56.233804', '', '', '', ''),
 (8, 8, 6, '2024-04-20', 'pending', '', '2023-10-15 01:18:23.103966', 'Bagiuo', '01239103213', 'smoker@gmail.com', '08:00'),
-(11, 7, 420, '2025-12-01', 'denied', '', '2023-10-15 02:54:32.955500', 'Bagiuo', '98349284', 'ali@yahoo.com', '4:20');
+(12, 1, 50, '2025-04-20', 'approved', '', '2023-10-18 15:40:48.102564', 'Bagiuo', '0974819264', 'example@yahoo.com', '4:20'),
+(14, 1, 2, '2023-11-25', 'approved', '', '2023-11-16 10:45:39.953176', 'asdfasd', '09367423894', 'asdfka@gmail.com', '00:45'),
+(15, 7, 5, '2023-11-17', 'approved', '', '2023-11-16 11:06:07.384470', 'akkfsjg', 'kgsdlfjhg', 'stephenonline25@gmail.com', '05:06');
 
 -- --------------------------------------------------------
 
@@ -186,10 +182,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `pwd`, `address`, `phone`, `email`, `type`, `status`, `bdate`) VALUES
-(1, 'Chin Tuano', 'password', 'Laguna ', '09123456789', 'chin@yahoo.com', 'staff', 'locked', '1995-12-20 10:00:08'),
+(1, 'Chin Tuano', 'password', 'Laguna ', '09123456789', 'chin@yahoo.com', 'staff', 'active', '1995-12-20 10:00:08'),
 (5, 'admin', 'password', 'unidentified', 'unidentified', 'unidentified@email.com', 'admin', 'active', 'not set'),
-(6, 'Alyza Aliman', 'password', 'Calamba', '198302', 'ali@yahoo.com', 'staff', 'locked', 'not set'),
-(7, 'RV pacana', 'password', 'Mabuhay', '98349284', 'rv@email.com', 'staff', 'locked', 'not set');
+(6, 'Alyza Aliman', 'password', 'Calamba', '198302', 'ali@yahoo.com', 'staff', 'active', 'not set'),
+(7, 'RV pacana', 'password', 'Mabuhay', '98349284', 'rv@email.com', 'staff', 'active', 'not set');
 
 --
 -- Indexes for dumped tables
@@ -257,13 +253,13 @@ ALTER TABLE `frontdest_users`
 -- AUTO_INCREMENT for table `holidays`
 --
 ALTER TABLE `holidays`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tbl_frontdesk_users`
