@@ -51,7 +51,12 @@ def deny_event(id):
         except:
             print("Can't Deny Approved Event")
             return redirect('/option/option4')
-        return redirect(url_for('dashboard'))
+        return f"""
+                        <script>
+                            alert("Admin user can only do this task");
+                            window.location.href='/dashboard';
+                        </script>
+                        """
     return redirect(url_for('index'))
 
 @app.route('/approve_event/<int:id>', methods=['POST', 'GET'])
@@ -67,7 +72,12 @@ def approve_event(id):
         except:
             print("Can't Approve Approved Event")
             return redirect('/option/option4')
-        return redirect(url_for('dashboard'))
+        return f"""
+                        <script>
+                            alert("Admin user can only do this task");
+                            window.location.href='/dashboard';
+                        </script>
+                        """
     return redirect(url_for('index'))
 
 @app.route('/delete_holiday/<int:id>', methods=['POST', 'GET'])
@@ -79,7 +89,12 @@ def delete_holiday(id):
             db.session.delete(target_holiday)
             db.session.commit()
             return redirect('/option/option3')
-        return redirect(url_for('dashboard'))
+        return f"""
+                        <script>
+                            alert("Admin user can only do this task");
+                            window.location.href='/dashboard';
+                        </script>
+                        """
     return redirect(url_for('index'))
 
 @app.route('/delete_staff/<int:id>', methods=['POST', 'GET'])
@@ -91,7 +106,12 @@ def delete_staff(id):
             db.session.delete(target_user)
             db.session.commit()
             return redirect('/option/option2')
-        return redirect(url_for('dashboard'))
+        return f"""
+                        <script>
+                            alert("Admin user can only do this task");
+                            window.location.href='/dashboard';
+                        </script>
+                        """
     return redirect(url_for('index'))
 
 @app.route('/unlock_staff/<int:id>', methods=['POST', 'GET'])
@@ -103,7 +123,12 @@ def unlock_staff(id):
             target_user.status="active"
             db.session.commit()
             return redirect('/option/option2')
-        return redirect(url_for('dashboard'))
+        return f"""
+                        <script>
+                            alert("Admin user can only do this task");
+                            window.location.href='/dashboard';
+                        </script>
+                        """
     return redirect(url_for('index'))
 
 @app.route('/lock_staff/<int:id>', methods=['POST', 'GET'])
@@ -115,7 +140,12 @@ def lock_staff(id):
             target_user.status="locked"
             db.session.commit()
             return redirect('/option/option2')
-        return redirect(url_for('dashboard'))
+        return f"""
+                        <script>
+                            alert("Admin user can only do this task");
+                            window.location.href='/dashboard';
+                        </script>
+                        """
     return redirect(url_for('index'))
 
 
@@ -128,7 +158,11 @@ def save_holiday():
             reservation_obj = Reservations.query.filter_by(rdate=date).first()
             holidays_obj = Holidays.query.filter_by(date=date).first()
             if reservation_obj or holidays_obj:
-                return "cannot add, date is reservation or holidays"
+                return f"""
+                    <script>
+                        alert("Can't book on reserved/holiday date");
+                    </script>
+                    """
             holiday_entry = Holidays(
                 date=date,
                 reason=reason,
@@ -140,7 +174,12 @@ def save_holiday():
             return redirect('/option/option3')
         print(current_user)
         print(current_user.status)
-        return redirect(url_for('dashboard'))
+        return f"""
+                        <script>
+                            alert("Admin user can only do this task");
+                            window.location.href='/dashboard';
+                        </script>
+                        """
     return redirect(url_for('index'))
 
 @app.route('/save_user', methods=['POST', 'GET'])
@@ -161,21 +200,30 @@ def save_user():
             )
             db.session.add(user_entry)
             db.session.commit()
-        return redirect(url_for('dashboard'))
+        return f"""
+                        <script>
+                            alert("Admin user can only do this task");
+                            window.location.href='/dashboard';
+                        </script>
+                        """
     return redirect(url_for('index'))
 
 @app.route('/save_booking_event', methods=['POST','GET'])
 def save_booking_event():
     if 'email' in session:
-        name, address, phone_no, email_address, reservation_date, reservation_time, no_people = request.form['name'], request.form['address'], request.form['phone_no'], request.form['email_address'], request.form['reservation_date'], request.form['reservation_time'], request.form['no_people']
+        address, phone_no, email_address, reservation_date, reservation_time, no_people = request.form['address'], request.form['phone_no'], request.form['email_address'], request.form['reservation_date'], request.form['reservation_time'], request.form['no_people']
         if datetime.strptime(reservation_date, '%Y-%m-%d') < datetime.now():
             flash("Please reserve ahead of current time")
             return redirect('/option/option1')
-        users_obj = Users.query.filter_by(id=name).first()
+        users_obj = Users.query.filter_by(email=session.get('email', "")).first()
         reservation_obj = Reservations.query.filter_by(rdate=reservation_date).first()
         holidays_obj = Holidays.query.filter_by(date=reservation_date).first()
         if reservation_obj or holidays_obj:
-            return "<h1>cant book any event on holidays</h1>"
+            return f"""
+                    <script>
+                        alert("Can't book on reserved/holiday date");
+                    </script>
+                    """
 
         reservation_entry = Reservations(
             uid=users_obj.id,
@@ -238,6 +286,7 @@ def get_calendar(year, month):
 def option(option):
     if 'email' in session:
         # Calculate the current year and month
+        current_user = Users.query.filter_by(email=session.get('email', "")).first()
         current_date = datetime.now()
         current_year = current_date.year
         current_month = current_date.month
@@ -262,7 +311,7 @@ def option(option):
                 'email': user_obj.email,
                 'phone': user_obj.phone,
                 'rdate': i.rdate,
-                'bdate': i.bdate,
+                'bdate': datetime.strptime(i.bdate, '%Y-%m-%d %H:%M:%S.%f').strftime('%B %d, %Y, %I:%M:%S %p'),
                 'ucount': i.ucount,
                 'status': i.status
                  }
@@ -274,7 +323,8 @@ def option(option):
                               users_all_obj=users_all_obj,
                               holidays_all_obj=holidays_all_obj,
                               reservations_all_obj=reservations_all_obj,
-                              events_and_user_combined=events_and_user_combined)
+                              events_and_user_combined=events_and_user_combined,
+                              current_user=current_user)
     return redirect(url_for('index'))
 
 @app.route('/dashboard', methods=['GET'])
@@ -290,8 +340,11 @@ def authenticate():
         email, password = request.form.get('email'), request.form.get('password')
         current_user = Users.query.filter_by(email=email).first()
         if current_user.type=="staff" and current_user.status=="locked":
-            print('account locked')
-            return redirect(url_for('index'))
+            return f"""
+                    <script>
+                        alert("Can't Login, The account is LOCKED");
+                    </script>
+                    """
         
         if Users.login_is_true(email, password):
             session['email'] = email
