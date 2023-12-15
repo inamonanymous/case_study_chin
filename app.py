@@ -19,6 +19,45 @@ def logout():
         return redirect(url_for('index'))
     return redirect(url_for('index'))
 
+@app.route('/change-password', methods=['POST'])
+def change_password():
+    if 'email' in session:
+        current_user = Users.query.filter_by(email=session.get('email', "")).first()
+        password, password2 = request.form['password'], request.form['password']
+        if password != password2 and len(password2)>=8:
+            return f"""
+                <script>
+                    alert("Please make sure the Passwords are matching and the characters is above 8 in length");
+                    location.reload(true);
+                </script>
+                """
+        current_user.pwd=password2
+        db.session.commit()
+        return f"""
+                <script>
+                    alert("Password Updated");
+                    window.location.href='/dashboard';
+                </script>
+                """
+    return redirect(url_for('index'))
+
+@app.route('/edit-credentials', methods=['POST'])
+def edit_credentials():
+    if 'email' in session:
+        current_user = Users.query.filter_by(email=session.get('email', "")).first()
+        name, address, email, phone = request.form['name'], request.form['address'], request.form['email'], request.form['phone']
+        current_user.name=name
+        current_user.address=address
+        current_user.email=email
+        current_user.phone=phone
+        db.session.commit()
+        return f"""
+                <script>
+                    alert("Credentials Updated");
+                    window.location.href='/dashboard';
+                </script>
+                """
+    return redirect(url_for('index'))
 
 @app.route('/delete_event/<int:id>', methods=['POST', 'GET'])
 def delete_event(id):
@@ -70,7 +109,6 @@ def approve_event(id):
                 db.session.commit()
                 return redirect('/option/option4')
         except:
-            print("Can't Approve Approved Event")
             return redirect('/option/option4')
         return f"""
                         <script>
@@ -176,7 +214,7 @@ def save_holiday():
         print(current_user.status)
         return f"""
                         <script>
-                            alert("Admin user can only do this task");
+                            alert("User added! the password is automatically set to: password");
                             window.location.href='/dashboard';
                         </script>
                         """
@@ -188,6 +226,16 @@ def save_user():
         current_user = Users.query.filter_by(email=session.get('email', "")).first()
         if str(current_user.type) == 'admin':
             name, address, email_address, phone_no = request.form['name'], request.form['address'], request.form['email_address'], request.form['phone_no']
+            check_user = Users.query.filter_by(email=email_address).first()
+            if check_user:
+                return f"""
+                        <script>
+                            alert("This email address already registered and cannot be added! Choose Different Email Address");
+                            window.location.href='/dashboard';
+                        </script>
+                        """
+
+
             user_entry = Users(
                 name=name,
                 pwd='password',
@@ -202,7 +250,7 @@ def save_user():
             db.session.commit()
         return f"""
                         <script>
-                            alert("Admin user can only do this task");
+                            alert("User added! the password is automatically set to: password");
                             window.location.href='/dashboard';
                         </script>
                         """
@@ -350,7 +398,12 @@ def authenticate():
             session['email'] = email
             
             return redirect(url_for('dashboard'))
-        return redirect(url_for('index'))
+        return f"""
+                    <script>
+                        alert("Can't Login, Username and Password doesn't match");
+                        window.location.href='/';
+                    </script>
+                    """
     except:
         return redirect(url_for('index'))
 

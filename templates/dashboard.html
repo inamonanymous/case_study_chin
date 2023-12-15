@@ -28,6 +28,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('option', option='option4') }}">Event Booking</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('option', option='option5') }}">Settings</a>
+            </li>
         </ul>
     </div>
     
@@ -47,6 +50,10 @@
         {% elif selected_option == 'option4' %}
         <div>
             {% include 'event_booking.html' %}
+        </div>
+        {% elif selected_option == 'option5' %}
+        <div>
+            {% include 'settings.html' %}
         </div>
         {% endif %}
     </div>

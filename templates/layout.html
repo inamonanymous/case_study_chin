@@ -20,6 +20,7 @@
             padding: 10px 0;
             color: #fff;
             margin-bottom: 10px;
+            max-height: 50%;
         }
         body {
             margin-bottom: 100px; /* Adjust based on your footer height */
@@ -30,15 +31,15 @@
         }
 
         #logo{
-            max-width: 20%;
-            
+            max-width: 12%;
+            max-height: 100%;
         }
 
         /* Footer Styles */
         #footer {
             background-color: #343a40;
             color: #fff;
-            padding: 20px 0;
+            padding: 10px 0;
             text-align: center;
             position: fixed;
             bottom: 0;
@@ -55,6 +56,9 @@
             <div class="row">
               <div class="col">
                 <img src="{{ url_for('static', filename='img/logo.png') }}" alt="an image of strange house" id="logo">
+              </div>
+              <div>
+                <p class="h3 font-italic font-weight-light">Event Management System</p>
               </div>
             </div>
         </div>
