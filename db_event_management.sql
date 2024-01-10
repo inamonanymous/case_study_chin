@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 16, 2023 at 04:58 AM
+-- Generation Time: Jan 10, 2024 at 10:07 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -20,6 +20,23 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_event_management`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `alembic_version`
+--
+
+CREATE TABLE `alembic_version` (
+  `version_num` varchar(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `alembic_version`
+--
+
+INSERT INTO `alembic_version` (`version_num`) VALUES
+('924944987763');
 
 -- --------------------------------------------------------
 
@@ -73,91 +90,19 @@ CREATE TABLE `reservations` (
   `caddress` varchar(250) NOT NULL,
   `cphone_no` varchar(20) NOT NULL,
   `cemail_address` varchar(250) NOT NULL,
-  `rtime` varchar(20) NOT NULL
+  `rtime` varchar(20) NOT NULL,
+  `title` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `reservations`
 --
 
-INSERT INTO `reservations` (`id`, `uid`, `ucount`, `rdate`, `status`, `comments`, `bdate`, `caddress`, `cphone_no`, `cemail_address`, `rtime`) VALUES
-(1, 1, 4, '2023-10-30', 'approved', '', '2023-10-10 18:01:11.195614', '', '', '', ''),
-(2, 2, 6, '2023-11-30', 'pending', '', '2023-10-11 01:35:53.597866', '', '', '', ''),
-(3, 4, 5, '2023-10-17', 'pending', '', '2023-10-11 21:38:32.995736', '', '', '', ''),
-(4, 6, 4, '09789456123', 'approved', '', '2023-10-14 05:16:13.479023', '', '', '', ''),
-(5, 5, 70, '2023-11-10', 'approved', '', '2023-10-14 05:34:24.699091', '', '', '', ''),
-(6, 7, 420, '2024-04-20', 'approved', '', '2023-10-15 00:18:56.233804', '', '', '', ''),
-(8, 8, 6, '2024-04-20', 'pending', '', '2023-10-15 01:18:23.103966', 'Bagiuo', '01239103213', 'smoker@gmail.com', '08:00'),
-(12, 1, 50, '2025-04-20', 'approved', '', '2023-10-18 15:40:48.102564', 'Bagiuo', '0974819264', 'example@yahoo.com', '4:20'),
-(14, 1, 2, '2023-11-25', 'approved', '', '2023-11-16 10:45:39.953176', 'asdfasd', '09367423894', 'asdfka@gmail.com', '00:45'),
-(15, 7, 5, '2023-11-17', 'approved', '', '2023-11-16 11:06:07.384470', 'akkfsjg', 'kgsdlfjhg', 'stephenonline25@gmail.com', '05:06');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_frontdesk_users`
---
-
-CREATE TABLE `tbl_frontdesk_users` (
-  `id` int(10) NOT NULL,
-  `username` varchar(100) NOT NULL,
-  `pwd` varchar(200) NOT NULL,
-  `bdate` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_holidays`
---
-
-CREATE TABLE `tbl_holidays` (
-  `id` int(10) NOT NULL,
-  `date` varchar(20) NOT NULL,
-  `reason` varchar(100) NOT NULL,
-  `bdate` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_reservations`
---
-
-CREATE TABLE `tbl_reservations` (
-  `id` int(10) NOT NULL,
-  `uid` int(10) NOT NULL,
-  `ucount` int(10) NOT NULL,
-  `rdate` varchar(100) NOT NULL,
-  `status` varchar(10) NOT NULL,
-  `comments` varchar(250) NOT NULL,
-  `bdate` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_users`
---
-
-CREATE TABLE `tbl_users` (
-  `id` int(10) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `pwd` varchar(200) NOT NULL,
-  `address` varchar(250) NOT NULL,
-  `phone` varchar(20) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `type` varchar(10) NOT NULL,
-  `status` varchar(10) NOT NULL,
-  `bdate` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `tbl_users`
---
-
-INSERT INTO `tbl_users` (`id`, `name`, `pwd`, `address`, `phone`, `email`, `type`, `status`, `bdate`) VALUES
-(15, 'admin', 'admin', 'some addresses', '11223344', 'myemail@gmail.com', 'admin', 'active', '2016-12-20 10:00:08');
+INSERT INTO `reservations` (`id`, `uid`, `ucount`, `rdate`, `status`, `comments`, `bdate`, `caddress`, `cphone_no`, `cemail_address`, `rtime`, `title`) VALUES
+(2, 2, 6, '2023-11-30', 'pending', '', '2023-10-11 01:35:53.597866', '', '', '', '', ''),
+(3, 4, 5, '2023-10-17', 'pending', '', '2023-10-11 21:38:32.995736', '', '', '', '', ''),
+(8, 8, 6, '2024-04-20', 'pending', '', '2023-10-15 01:18:23.103966', 'Bagiuo', '01239103213', 'smoker@gmail.com', '08:00', ''),
+(23, 5, 123, '2024-01-12', 'approved', '', '2024-01-10 21:52:17.146417', 'Mamatid', '09573829103', 'panotpogi21@gmail.com', '21:57', 'Fliptop');
 
 -- --------------------------------------------------------
 
@@ -182,14 +127,21 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `pwd`, `address`, `phone`, `email`, `type`, `status`, `bdate`) VALUES
-(1, 'Chin Tuano', 'password', 'Laguna ', '09123456789', 'chin@yahoo.com', 'staff', 'active', '1995-12-20 10:00:08'),
+(1, 'Chin Tuano', 'password1', 'Laguna ', '09123456789', 'chin@yahoo.com', 'staff', 'active', '1995-12-20 10:00:08'),
 (5, 'admin', 'password', 'unidentified', 'unidentified', 'unidentified@email.com', 'admin', 'active', 'not set'),
 (6, 'Alyza Aliman', 'password', 'Calamba', '198302', 'ali@yahoo.com', 'staff', 'active', 'not set'),
-(7, 'RV pacana', 'password', 'Mabuhay', '98349284', 'rv@email.com', 'staff', 'active', 'not set');
+(7, 'RV pacana', 'password', 'Mabuhay', '98349284', 'rv@email.com', 'staff', 'active', 'not set'),
+(9, 'asdfasdf', 'password', 'MAMATID', '09573829572', 'client@domain.com', 'staff', 'active', 'not set');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `alembic_version`
+--
+ALTER TABLE `alembic_version`
+  ADD PRIMARY KEY (`version_num`);
 
 --
 -- Indexes for table `frontdest_users`
@@ -207,30 +159,6 @@ ALTER TABLE `holidays`
 -- Indexes for table `reservations`
 --
 ALTER TABLE `reservations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tbl_frontdesk_users`
---
-ALTER TABLE `tbl_frontdesk_users`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tbl_holidays`
---
-ALTER TABLE `tbl_holidays`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tbl_reservations`
---
-ALTER TABLE `tbl_reservations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tbl_users`
---
-ALTER TABLE `tbl_users`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -259,37 +187,13 @@ ALTER TABLE `holidays`
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- AUTO_INCREMENT for table `tbl_frontdesk_users`
---
-ALTER TABLE `tbl_frontdesk_users`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `tbl_holidays`
---
-ALTER TABLE `tbl_holidays`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `tbl_reservations`
---
-ALTER TABLE `tbl_reservations`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `tbl_users`
---
-ALTER TABLE `tbl_users`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

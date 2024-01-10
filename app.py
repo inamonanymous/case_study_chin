@@ -4,8 +4,10 @@ import calendar
 from datetime import datetime
 from sqlalchemy import or_, desc
 from sqlalchemy.orm import aliased
+from flask_migrate import Migrate
 
 app = Flask(__name__)
+migrate = Migrate(app, db)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/db_event_management'
 app.secret_key = 'putanginamochin'
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -45,10 +47,9 @@ def change_password():
 def edit_credentials():
     if 'email' in session:
         current_user = Users.query.filter_by(email=session.get('email', "")).first()
-        name, address, email, phone = request.form['name'], request.form['address'], request.form['email'], request.form['phone']
+        name, address, phone = request.form['name'], request.form['address'], request.form['phone']
         current_user.name=name
         current_user.address=address
-        current_user.email=email
         current_user.phone=phone
         db.session.commit()
         return f"""
@@ -66,8 +67,7 @@ def delete_event(id):
         if current_user.type=="admin":
             try:
                 target_event = Reservations.query.filter(
-                            (Reservations.id == id) & (or_(Reservations.status == "pending", Reservations.status == "denied"))
-                        ).first()
+                            (Reservations.id == id)).first()
                 db.session.delete(target_event)
                 db.session.commit()
                 return redirect('/option/option4')
@@ -259,7 +259,7 @@ def save_user():
 @app.route('/save_booking_event', methods=['POST','GET'])
 def save_booking_event():
     if 'email' in session:
-        address, phone_no, email_address, reservation_date, reservation_time, no_people = request.form['address'], request.form['phone_no'], request.form['email_address'], request.form['reservation_date'], request.form['reservation_time'], request.form['no_people']
+        title, address, phone_no, email_address, reservation_date, reservation_time, no_people = request.form['title'], request.form['address'], request.form['phone_no'], request.form['email_address'], request.form['reservation_date'], request.form['reservation_time'], request.form['no_people']
         if datetime.strptime(reservation_date, '%Y-%m-%d') < datetime.now():
             flash("Please reserve ahead of current time")
             return redirect('/option/option1')
@@ -283,7 +283,8 @@ def save_booking_event():
             caddress=address,
             cphone_no=phone_no,
             cemail_address=email_address,
-            rtime=reservation_time
+            rtime=reservation_time,
+            title=title
         )
 
         db.session.add(reservation_entry)
@@ -307,7 +308,7 @@ def get_calendar(year, month):
             user_alias = aliased(Users)
             reservations_with_names = db.session.query(Reservations, user_alias.name).join(user_alias, Reservations.uid == user_alias.id).filter(Reservations.status == "approved").all()
             # Now, you can create a list of reservations with user names
-            reservations = [{"date": reservation.rdate, "user_name": user_name} for reservation, user_name in reservations_with_names]
+            reservations = [{"date": reservation.rdate, "title": reservation.title} for reservation, user_name in reservations_with_names]
 
             # Combine holidays and reservations into a dictionary
             reservations_and_holidays = {
@@ -358,10 +359,12 @@ def option(option):
                 'name': user_obj.name,
                 'email': user_obj.email,
                 'phone': user_obj.phone,
-                'rdate': i.rdate,
+                'rdate': datetime.strptime(i.rdate, '%Y-%m-%d').strftime('%B %d, %Y'),
                 'bdate': datetime.strptime(i.bdate, '%Y-%m-%d %H:%M:%S.%f').strftime('%B %d, %Y, %I:%M:%S %p'),
+                'rtime': datetime.strptime(i.rtime, '%H:%M').strftime('%I:%M %p'),
                 'ucount': i.ucount,
-                'status': i.status
+                'status': i.status,
+                'title': i.title
                  }
                 events_and_user_combined.append(combined_data)
 

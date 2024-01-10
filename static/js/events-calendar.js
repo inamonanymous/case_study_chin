@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         events.reservations.forEach(reservation => {
                             if (reservation.date === formattedDate) {
-                                td.textContent = `${day} - Staff: ${reservation.user_name}`;
+                                td.textContent = `${day} - Event: ${reservation.title}`;
                                 td.classList.add("reservation-date");
                                 td.style.backgroundColor = "green";
                             }
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Fetch the event and holiday data and update the calendar here
-    fetch(`/get_calendar/${currentYear}/${currentMonthIndex}`)
+    fetch(`/get_calendar/${currentYear}/${currentMonthIndex+1}`)
         .then(response => response.json())
         .then(data => {
             events = data.events;

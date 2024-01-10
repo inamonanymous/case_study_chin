@@ -5,6 +5,7 @@
                 <thead>
                     <tr>
                         <th>Staff Name</th>
+                        <th>Event Title</th>
                         <th>No. of People</th>
                         <th>Client Phone Number</th>
                         <th>Reservation Date</th>
@@ -18,9 +19,10 @@
                     {% for i in events_and_user_combined %}
                     <tr>
                         <td>{{ i.name }}</td>
+                        <td>{{ i.title }}</td>
                         <td>{{ i.ucount }}</td>
                         <td>{{ i.phone }}</td>
-                        <td>{{ i.rdate }}</td>
+                        <td>{{ i.rdate }}, {{ i.rtime }}</td>
                         <td>{{ i.bdate }}</td>
                         <td>{{ i.ucount }}</td>
                         <td>{{ i.status|capitalize }}</td>
@@ -32,7 +34,7 @@
                             <a href="/deny_event/{{ i.id }}">
                                 <button class="btn btn-danger">Deny</button>
                             </a>
-                            {% elif i.status == "denied" or i.status == "pending" %}
+                            {% elif i.status == "denied" or i.status == "pending" or i.status=="approved" %}
                             <a href="/delete_event/{{ i.id }}">
                                 <button class="btn btn-warning">Delete</button>
                             </a>

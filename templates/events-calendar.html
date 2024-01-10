@@ -19,8 +19,6 @@
     </div>
 </div>
 
-
-
 <div class="container mt-5">
     <div class="form-container">
         <div class="row justify-content-center">
@@ -30,15 +28,19 @@
                         <label for="name">Current Staff: <b>{{ current_user.name }}</b></label>
                     </div>
                     <div class="form-group">
-                        <label for="address">Client Address</label>
+                        <label for="title">Event Title</label>
+                        <input type="text" name="title" id="title" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Organizer Address</label>
                         <input type="text" name="address" id="address" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="phone_no">Client Phone</label>
+                        <label for="phone_no">Organizer Phone</label>
                         <input type="text" name="phone_no" id="phone_no" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="email_address">Client Email Address</label>
+                    <label for="email_address">Organizer Email Address</label>
                     <input type="email" name="email_address" id="email_address" class="form-control" required>
                 </div>
                 <div class="form-group">
